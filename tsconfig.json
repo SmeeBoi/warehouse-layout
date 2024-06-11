@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["dom", "es2021"],
+    "lib": [
+      "dom",
+      "es2021"
+    ],
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
@@ -9,18 +12,29 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "incremental": true,
     "allowJs": true,
     "noEmit": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.ts","src",
-  "__tests__",
-  "jest.setup.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "jest.config.ts",
+    "src",
+    "__tests__",
+    "jest.setup.ts",
+    "tailwind.config.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
