@@ -1,20 +1,20 @@
 import { gql } from 'apollo-server-micro';
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type Shelf {
     name: String!
     zone: Int!
+  }
+
+  type Zone {
+    number: Int!
+    shelves: [Shelf!]!
   }
 
   type Warehouse {
     id: ID!
     name: String!
     zones: [Zone!]!
-  }
-
-  type Zone {
-    number: Int!
-    shelves: [Shelf!]!
   }
 
   input ShelfInput {
@@ -40,5 +40,3 @@ const typeDefs = gql`
     warehouses: [Warehouse!]!
   }
 `;
-
-export default typeDefs;

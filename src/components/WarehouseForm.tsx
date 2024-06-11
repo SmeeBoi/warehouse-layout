@@ -18,14 +18,36 @@ interface Warehouse {
 
 const WarehouseForm: React.FC = () => {
   const [warehouseName, setWarehouseName] = useState('');
-  const [zones, setZones] = useState([
-    { number: 1, shelves: [{ name: '', zone: 1 }] },
-  ]);
+  const [zones, setZones] = useState<Zone[]>(
+    Array.from({ length: 12 }, (_, i) => ({ number: i + 1, shelves: [] }))
+  );
   const [error, setError] = useState<string | null>(null);
 
-  const handleAddShelf = () => {
+  const maxShelvesPerZone = 2; // Change this value for testing purposes
+
+  const handleAddShelf = (zoneIndex: number) => {
     const newZones = [...zones];
-    newZones[0].shelves.push({ name: '', zone: 1 });
+    if (newZones[zoneIndex].shelves.length >= maxShelvesPerZone) {
+      setError(
+        `Each zone can only contain a maximum of ${maxShelvesPerZone} shelves.`
+      );
+      return;
+    }
+    newZones[zoneIndex].shelves.push({
+      name: '',
+      zone: newZones[zoneIndex].number,
+    });
+    setZones(newZones);
+    setError(null); // Clear any previous errors
+  };
+
+  const handleShelfNameChange = (
+    zoneIndex: number,
+    shelfIndex: number,
+    newName: string
+  ) => {
+    const newZones = [...zones];
+    newZones[zoneIndex].shelves[shelfIndex].name = newName;
     setZones(newZones);
   };
 
@@ -61,39 +83,40 @@ const WarehouseForm: React.FC = () => {
           onChange={(e) => setWarehouseName(e.target.value)}
         />
       </div>
-      {zones.map((zone, zoneIndex) => (
-        <div key={zoneIndex} className="flex flex-col space-y-2">
-          <label className="font-semibold">Zone {zone.number}:</label>
-          <input
-            className="p-2 border border-gray-300 rounded"
-            value={zone.number}
-            readOnly
-          />
-          {zone.shelves.map((shelf, shelfIndex) => (
-            <div key={shelfIndex} className="flex items-center space-x-2">
-              <label className="font-semibold">
-                Shelf {shelfIndex + 1} Name:
-              </label>
-              <input
-                className="p-2 border border-gray-300 rounded"
-                value={shelf.name}
-                onChange={(e) => {
-                  const newZones = [...zones];
-                  newZones[zoneIndex].shelves[shelfIndex].name = e.target.value;
-                  setZones(newZones);
-                }}
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={handleAddShelf}
-          >
-            Add Shelf
-          </button>
-        </div>
-      ))}
+      <div className="flex flex-col space-y-2">
+        <label className="font-semibold">Zone 1:</label>
+        {zones[0].shelves.map((shelf, shelfIndex) => (
+          <div key={shelfIndex} className="flex items-center space-x-2">
+            <label className="font-semibold">
+              Shelf {shelfIndex + 1} Name:
+            </label>
+            <input
+              className="p-2 border border-gray-300 rounded"
+              value={shelf.name}
+              onChange={(e) =>
+                handleShelfNameChange(0, shelfIndex, e.target.value)
+              }
+            />
+          </div>
+        ))}
+        {zones[0].shelves.length >= maxShelvesPerZone && (
+          <div className="text-red-500 text-sm">
+            Maximum of {maxShelvesPerZone} shelves allowed per zone.
+          </div>
+        )}
+        <button
+          type="button"
+          className={`px-4 py-2 rounded text-white ${
+            zones[0].shelves.length >= maxShelvesPerZone
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-500 hover:bg-blue-600'
+          }`}
+          onClick={() => handleAddShelf(0)}
+          disabled={zones[0].shelves.length >= maxShelvesPerZone}
+        >
+          Add Shelf
+        </button>
+      </div>
       <button
         type="submit"
         className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
