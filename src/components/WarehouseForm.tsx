@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
+import { createWarehouse } from '../utils/api';
 
 interface Shelf {
   name: string;
   zone: number;
 }
 
-interface WarehouseFormProps {
-  createWarehouse: (warehouse: {
-    name: string;
-    zones: Array<{ number: number; shelves: Shelf[] }>;
-  }) => void;
+interface Zone {
+  number: number;
+  shelves: Shelf[];
 }
 
-const WarehouseForm: React.FC<WarehouseFormProps> = ({ createWarehouse }) => {
+interface Warehouse {
+  name: string;
+  zones: Zone[];
+}
+
+const WarehouseForm: React.FC = () => {
   const [warehouseName, setWarehouseName] = useState('');
   const [zones, setZones] = useState([
     { number: 1, shelves: [{ name: '', zone: 1 }] },
@@ -24,12 +28,14 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ createWarehouse }) => {
     setZones(newZones);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    createWarehouse({
+    const warehouse: Warehouse = {
       name: warehouseName,
       zones,
-    });
+    };
+    const result = await createWarehouse(warehouse);
+    console.log('Warehouse created:', result);
   };
 
   return (

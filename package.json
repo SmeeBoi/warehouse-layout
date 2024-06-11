@@ -13,6 +13,7 @@
     "test:watch": "jest --watch --config jest.config.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.4",
     "apollo-server-micro": "^3.13.0",
     "axios": "^1.7.2",
     "graphql": "^16.8.1",

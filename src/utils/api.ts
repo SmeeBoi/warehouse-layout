@@ -1,37 +1,46 @@
-import axios from 'axios';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+const client = new ApolloClient({
+  uri: '/api/graphql',
+  cache: new InMemoryCache(),
 });
 
-// Define the function to handle the GraphQL mutation for creating a new warehouse
-export const createWarehouse = async (warehouseInput: any): Promise<any> => {
-  const mutation = `
-    mutation CreateWarehouse($warehouseInput: WarehouseInput!) {
-      createWarehouse(warehouseInput: $warehouseInput) {
+interface Shelf {
+  name: string;
+  zone: number;
+}
+
+interface Zone {
+  number: number;
+  shelves: Shelf[];
+}
+
+interface Warehouse {
+  name: string;
+  zones: Zone[];
+}
+
+export const createWarehouse = async (warehouse: Warehouse) => {
+  const CREATE_WAREHOUSE_MUTATION = gql`
+    mutation CreateWarehouse($input: WarehouseInput!) {
+      createWarehouse(input: $input) {
         id
         name
         zones {
-          id
           number
           shelves {
-            id
             name
+            zone
           }
         }
       }
     }
   `;
 
-  const response = await api.post('/graphql', {
-    query: mutation,
-    variables: { warehouseInput },
+  const response = await client.mutate({
+    mutation: CREATE_WAREHOUSE_MUTATION,
+    variables: { input: warehouse },
   });
 
-  return response.data.data.createWarehouse;
+  return response.data.createWarehouse;
 };
-
-export default api;

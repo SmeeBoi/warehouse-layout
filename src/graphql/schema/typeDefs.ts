@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-micro';
 
-export const typeDefs = gql`
+const typeDefs = gql`
+  type Shelf {
+    name: String!
+    zone: Int!
+  }
+
   type Warehouse {
     id: ID!
     name: String!
@@ -8,18 +13,13 @@ export const typeDefs = gql`
   }
 
   type Zone {
-    id: ID!
     number: Int!
     shelves: [Shelf!]!
   }
 
-  type Shelf {
-    id: ID!
-    name: String!
-  }
-
   input ShelfInput {
     name: String!
+    zone: Int!
   }
 
   input ZoneInput {
@@ -33,10 +33,12 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createWarehouse(warehouseInput: WarehouseInput!): Warehouse!
+    createWarehouse(input: WarehouseInput!): Warehouse!
   }
 
   type Query {
     warehouses: [Warehouse!]!
   }
 `;
+
+export default typeDefs;
