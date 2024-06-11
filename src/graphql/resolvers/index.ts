@@ -24,7 +24,7 @@ export const resolvers = {
   Mutation: {
     createWarehouse: (
       _: any,
-      { warehouseInput }: { warehouseInput: WarehouseInput },
+      { warehouseInput }: { warehouseInput: WarehouseInput }
     ): Warehouse => {
       const newWarehouse: Warehouse = {
         id: warehouses.length + 1,
