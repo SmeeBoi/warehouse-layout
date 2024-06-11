@@ -51,17 +51,18 @@ To format the code with Prettier, use:
 npm run format
 ````
 
-Tools Used:
-Next.js: React framework for server-side rendering and static site generation.
-TypeScript: Typed superset of JavaScript that compiles to plain JavaScript.
-Apollo Server: GraphQL server implementation for Node.js.
-GraphQL: Query language for APIs and a runtime for executing those queries.
-Tailwind CSS: Utility-first CSS framework for rapid UI development.
-Jest: JavaScript testing framework.
-ESLint: Pluggable linting utility for JavaScript and TypeScript.
-Prettier: Code formatter to ensure consistent style.
-Husky: Git hooks to lint and test code before commits.
-PostCSS: Tool for transforming CSS with JavaScript plugins.
+## Tools Used
+
+- **Next.js**: React framework for server-side rendering and static site generation.
+- **TypeScript**: Typed superset of JavaScript that compiles to plain JavaScript.
+- **Apollo Server**: GraphQL server implementation for Node.js.
+- **GraphQL**: Query language for APIs and a runtime for executing those queries.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Jest**: JavaScript testing framework.
+- **ESLint**: Pluggable linting utility for JavaScript and TypeScript.
+- **Prettier**: Code formatter to ensure consistent style.
+- **Husky**: Git hooks to lint and test code before commits.
+- **PostCSS**: Tool for transforming CSS with JavaScript plugins.
 
 ```
 
