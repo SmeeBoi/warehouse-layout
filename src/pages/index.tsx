@@ -1,14 +1,11 @@
-// src/pages/index.tsx
-
 import React from 'react';
 
-const Home = () => {
+const HomePage: React.FC = () => {
   return (
     <div>
-      <h1>Warehouse Layout Application</h1>
-      <p>Welcome to the Warehouse Layout Application</p>
+      <h1>Welcome to the Warehouse Layout</h1>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
