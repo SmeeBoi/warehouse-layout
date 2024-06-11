@@ -83,40 +83,42 @@ const WarehouseForm: React.FC = () => {
           onChange={(e) => setWarehouseName(e.target.value)}
         />
       </div>
-      <div className="flex flex-col space-y-2">
-        <label className="font-semibold">Zone 1:</label>
-        {zones[0].shelves.map((shelf, shelfIndex) => (
-          <div key={shelfIndex} className="flex items-center space-x-2">
-            <label className="font-semibold">
-              Shelf {shelfIndex + 1} Name:
-            </label>
-            <input
-              className="p-2 border border-gray-300 rounded"
-              value={shelf.name}
-              onChange={(e) =>
-                handleShelfNameChange(0, shelfIndex, e.target.value)
-              }
-            />
-          </div>
-        ))}
-        {zones[0].shelves.length >= maxShelvesPerZone && (
-          <div className="text-red-500 text-sm">
-            Maximum of {maxShelvesPerZone} shelves allowed per zone.
-          </div>
-        )}
-        <button
-          type="button"
-          className={`px-4 py-2 rounded text-white ${
-            zones[0].shelves.length >= maxShelvesPerZone
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600'
-          }`}
-          onClick={() => handleAddShelf(0)}
-          disabled={zones[0].shelves.length >= maxShelvesPerZone}
-        >
-          Add Shelf
-        </button>
-      </div>
+      {zones.map((zone, zoneIndex) => (
+        <div key={zoneIndex} className="flex flex-col space-y-2">
+          <label className="font-semibold">Zone {zone.number}:</label>
+          {zone.shelves.map((shelf, shelfIndex) => (
+            <div key={shelfIndex} className="flex items-center space-x-2">
+              <label className="font-semibold">
+                Shelf {shelfIndex + 1} Name:
+              </label>
+              <input
+                className="p-2 border border-gray-300 rounded"
+                value={shelf.name}
+                onChange={(e) =>
+                  handleShelfNameChange(zoneIndex, shelfIndex, e.target.value)
+                }
+              />
+            </div>
+          ))}
+          {zone.shelves.length >= maxShelvesPerZone && (
+            <div className="text-red-500 text-sm">
+              Maximum of {maxShelvesPerZone} shelves allowed per zone.
+            </div>
+          )}
+          <button
+            type="button"
+            className={`px-4 py-2 rounded text-white ${
+              zone.shelves.length >= maxShelvesPerZone
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
+            }`}
+            onClick={() => handleAddShelf(zoneIndex)}
+            disabled={zone.shelves.length >= maxShelvesPerZone}
+          >
+            Add Shelf
+          </button>
+        </div>
+      ))}
       <button
         type="submit"
         className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
