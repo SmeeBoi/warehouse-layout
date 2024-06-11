@@ -21,6 +21,7 @@ const WarehouseForm: React.FC = () => {
   const [zones, setZones] = useState([
     { number: 1, shelves: [{ name: '', zone: 1 }] },
   ]);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAddShelf = () => {
     const newZones = [...zones];
@@ -30,16 +31,28 @@ const WarehouseForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     const warehouse: Warehouse = {
       name: warehouseName,
       zones,
     };
-    const result = await createWarehouse(warehouse);
-    console.log('Warehouse created:', result);
+    try {
+      const result = await createWarehouse(warehouse);
+      console.log('Warehouse created:', result);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Error creating warehouse:', err);
+        setError(err.message);
+      } else {
+        console.error('Unexpected error:', err);
+        setError('An unexpected error occurred');
+      }
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && <div className="text-red-500">{error}</div>}
       <div className="flex flex-col space-y-2">
         <label className="font-semibold">Warehouse Name:</label>
         <input

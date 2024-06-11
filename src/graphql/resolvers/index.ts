@@ -1,10 +1,9 @@
 interface Shelf {
-  id: number;
   name: string;
+  zone: number;
 }
 
 interface Zone {
-  id: number;
   number: number;
   shelves: Shelf[];
 }
@@ -15,28 +14,25 @@ interface Warehouse {
   zones: Zone[];
 }
 
+interface WarehouseInput {
+  name: string;
+  zones: Zone[];
+}
+
 const warehouses: Warehouse[] = [];
 
-export const resolvers = {
+const resolvers = {
   Query: {
     warehouses: (): Warehouse[] => warehouses,
   },
   Mutation: {
     createWarehouse: (
       _: any,
-      { warehouseInput }: { warehouseInput: WarehouseInput }
+      { input }: { input: WarehouseInput }
     ): Warehouse => {
       const newWarehouse: Warehouse = {
         id: warehouses.length + 1,
-        name: warehouseInput.name,
-        zones: warehouseInput.zones.map((zoneInput, index) => ({
-          id: index + 1,
-          number: zoneInput.number,
-          shelves: zoneInput.shelves.map((shelfInput, shelfIndex) => ({
-            id: shelfIndex + 1,
-            name: shelfInput.name,
-          })),
-        })),
+        ...input,
       };
       warehouses.push(newWarehouse);
       return newWarehouse;
@@ -44,16 +40,4 @@ export const resolvers = {
   },
 };
 
-interface ShelfInput {
-  name: string;
-}
-
-interface ZoneInput {
-  number: number;
-  shelves: ShelfInput[];
-}
-
-interface WarehouseInput {
-  name: string;
-  zones: ZoneInput[];
-}
+export default resolvers;

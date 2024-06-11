@@ -37,10 +37,19 @@ export const createWarehouse = async (warehouse: Warehouse) => {
     }
   `;
 
-  const response = await client.mutate({
-    mutation: CREATE_WAREHOUSE_MUTATION,
-    variables: { input: warehouse },
-  });
+  try {
+    const response = await client.mutate({
+      mutation: CREATE_WAREHOUSE_MUTATION,
+      variables: { input: warehouse },
+    });
 
-  return response.data.createWarehouse;
+    if (!response.data) {
+      throw new Error('No data returned from the server');
+    }
+
+    return response.data.createWarehouse;
+  } catch (error) {
+    console.error('Error creating warehouse:', error);
+    throw error;
+  }
 };
