@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // Change this line to use double quotes
 
 const HomePage: React.FC = () => {
   return (
