@@ -1,13 +1,28 @@
 import { ApolloServer } from 'apollo-server-micro';
 import typeDefs from '../../graphql/schema/typeDefs';
-import { resolvers } from '../../graphql/resolvers'; // Change the import statement
+import { resolvers } from '../../graphql/resolvers';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers });
+// Create the Apollo Server
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
+// Ensure the server is started before creating the handler
+const startServer = apolloServer.start();
+
+// Disable body parsing for GraphQL
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-export default apolloServer.createHandler({ path: '/api/graphql' });
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  await startServer;
+  await apolloServer.createHandler({ path: '/api/graphql' })(req, res);
+}
