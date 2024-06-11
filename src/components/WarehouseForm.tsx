@@ -23,7 +23,7 @@ const WarehouseForm: React.FC = () => {
   );
   const [error, setError] = useState<string | null>(null);
 
-  const maxShelvesPerZone = 2; // Change this value for testing purposes
+  const maxShelvesPerZone = 10; // Change this value for testing purposes
 
   const handleAddShelf = (zoneIndex: number) => {
     const newZones = [...zones];
