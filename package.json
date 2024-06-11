@@ -9,8 +9,8 @@
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx,json,css,md}'",
     "prepare": "husky install",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --config jest.config.ts",
+    "test:watch": "jest --watch --config jest.config.ts"
   },
   "dependencies": {
     "apollo-server-micro": "^3.13.0",
@@ -22,6 +22,9 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -32,6 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "autoprefixer": "^10.4.19",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
