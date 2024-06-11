@@ -18,9 +18,8 @@ export const typeDefs = gql`
     name: String!
   }
 
-  input WarehouseInput {
+  input ShelfInput {
     name: String!
-    zones: [ZoneInput!]!
   }
 
   input ZoneInput {
@@ -28,8 +27,9 @@ export const typeDefs = gql`
     shelves: [ShelfInput!]!
   }
 
-  input ShelfInput {
+  input WarehouseInput {
     name: String!
+    zones: [ZoneInput!]!
   }
 
   type Mutation {
