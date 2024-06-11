@@ -1,24 +1,11 @@
-class Logger {
-  private isDevelopment: boolean;
+import log from 'loglevel';
 
-  constructor() {
-    this.isDevelopment = process.env.NODE_ENV === 'development';
-  }
+const isDevelopment = process.env.NODE_ENV === 'development';
 
-  log(...args: any[]): void {
-    /* eslint-disable-next-line no-console */
-    if (this.isDevelopment) {
-      console.log(...args); // Only log in development
-    }
-  }
-
-  error(...args: any[]): void {
-    /* eslint-disable-next-line no-console */
-    if (this.isDevelopment) {
-      console.error(...args); // Only log errors in development
-    }
-  }
+if (isDevelopment) {
+  log.setLevel('debug');
+} else {
+  log.setLevel('warn');
 }
 
-const logger = new Logger();
-export default logger;
+export default log;

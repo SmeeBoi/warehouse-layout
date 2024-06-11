@@ -22,7 +22,7 @@ const WarehouseForm: React.FC = () => {
     const warehouseInput = { name, zones };
     try {
       const newWarehouse = await createWarehouse(warehouseInput);
-      logger.log('Created Warehouse:', newWarehouse);
+      logger.debug('Created Warehouse:', newWarehouse);
       // Handle successful creation (e.g., reset form, show success message)
     } catch (err) {
       logger.error('Error creating warehouse:', err);
